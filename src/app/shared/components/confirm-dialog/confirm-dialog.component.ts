@@ -1,10 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { 
-  MatDialogModule, 
-  MatDialogRef, 
-  MAT_DIALOG_DATA 
-} from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface ConfirmDialogData {
   title: string;
@@ -20,7 +16,7 @@ export interface ConfirmDialogData {
 export class ConfirmDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData,
   ) {}
 
   onCancel(): void {

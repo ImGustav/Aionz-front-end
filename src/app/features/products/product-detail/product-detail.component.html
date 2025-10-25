@@ -1,25 +1,26 @@
 <div *ngIf="product$ | async as product; else loading" class="detail-container">
-
   <mat-card class="detail-card">
     <mat-card-header>
       <mat-card-title>{{ product.name }}</mat-card-title>
     </mat-card-header>
-    
-    <img mat-card-image [src]="apiBaseUrl + product.image" [alt]="product.name" class="detail-image">
-    
+
+    <img
+      mat-card-image
+      [src]="apiBaseUrl + product.image"
+      [alt]="product.name"
+      class="detail-image"
+    />
+
     <mat-card-content>
-      <h2>{{ product.price | currency:'BRL' }}</h2>
-      <div class="category-label">
-          <strong>Categoria:</strong> {{ product.category.name }}
-      </div>
+      <h2>{{ product.price | currency: 'BRL' }}</h2>
+      <div class="category-label"><strong>Categoria:</strong> {{ product.category.name }}</div>
       <p>{{ product.description }}</p>
     </mat-card-content>
-    
+
     <mat-card-actions>
       <a mat-stroked-button routerLink="/produtos">Voltar para a lista</a>
     </mat-card-actions>
   </mat-card>
-
 </div>
 
 <ng-template #loading>

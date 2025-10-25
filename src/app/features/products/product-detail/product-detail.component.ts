@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { Observable, tap } from 'rxjs';
 import { Product } from '../../../core/models/product.model';
-import { Title, Meta } from '@angular/platform-browser'; 
+import { Title, Meta } from '@angular/platform-browser';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
@@ -18,21 +18,20 @@ import { MatButtonModule } from '@angular/material/button';
     CurrencyPipe,
     MatProgressSpinnerModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.scss'
+  styleUrl: './product-detail.component.scss',
 })
 export class ProductDetailComponent implements OnInit {
-
   public product$!: Observable<Product>;
-  public readonly apiBaseUrl: string; 
+  public readonly apiBaseUrl: string;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private titleService: Title, 
-    private metaService: Meta    
+    private titleService: Title,
+    private metaService: Meta,
   ) {
     this.apiBaseUrl = this.productService.getApiBaseUrl();
   }
@@ -41,18 +40,18 @@ export class ProductDetailComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
     this.product$ = this.productService.getProductById(id).pipe(
-      tap(product => {
+      tap((product) => {
         if (product) {
           const imageUrl = `${this.apiBaseUrl}${product.image}`;
 
           this.titleService.setTitle(`${product.name} - Loja AIONZ`);
-          
+
           this.metaService.updateTag({ name: 'description', content: product.description });
           this.metaService.updateTag({ property: 'og:title', content: product.name });
           this.metaService.updateTag({ property: 'og:description', content: product.description });
           this.metaService.updateTag({ property: 'og:image', content: imageUrl });
         }
-      })
+      }),
     );
   }
 }

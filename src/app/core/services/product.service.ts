@@ -6,28 +6,25 @@ import { Product } from '../models/product.model';
 import { PaginatedProducts } from '../models/paginated-products.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   private readonly apiBaseUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getApiBaseUrl(): string {
     return this.apiBaseUrl;
   }
 
   getProducts(
-    pageIndex: number, 
-    pageSize: number, 
-    searchTerm: string = ''
+    pageIndex: number,
+    pageSize: number,
+    searchTerm: string = '',
   ): Observable<PaginatedProducts> {
-    
     const apiPage = pageIndex + 1;
 
-    let params = new HttpParams()
-      .set('page', apiPage.toString())
-      .set('limit', pageSize.toString());
+    let params = new HttpParams().set('page', apiPage.toString()).set('limit', pageSize.toString());
 
     if (searchTerm) {
       params = params.set('search', searchTerm);

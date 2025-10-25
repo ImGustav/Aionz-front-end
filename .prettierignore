@@ -1,0 +1,12 @@
+# Dependências
+/node_modules
+
+# Cache do Angular
+/.angular/cache
+
+# Arquivos de Build
+/dist
+
+# Arquivos de Lock
+package-lock.json
+yarn.lock

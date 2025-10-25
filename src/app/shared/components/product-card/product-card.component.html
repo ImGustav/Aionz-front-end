@@ -1,16 +1,13 @@
 <div class="product-grid-container">
-
   <mat-card class="product-card">
-    
-    <img mat-card-image 
-         [src]="imageUrl"
-         [alt]="product.name" 
-         class="product-image">
+    <img mat-card-image [src]="imageUrl" [alt]="product.name" class="product-image" />
 
     <mat-card-header>
       <mat-card-title>{{ product.name }}</mat-card-title>
       <mat-card-subtitle class="product-category">{{ product.category.name }}</mat-card-subtitle>
-      <mat-card-subtitle class="product-price">R$ {{ formatPrice(product.price)}}</mat-card-subtitle>
+      <mat-card-subtitle class="product-price"
+        >R$ {{ formatPrice(product.price) }}</mat-card-subtitle
+      >
     </mat-card-header>
 
     <mat-card-content>
@@ -20,26 +17,20 @@
     </mat-card-content>
 
     <mat-card-actions align="end" class="product-actions">
-      <a mat-button 
-         color="primary" 
-         [routerLink]="['/produtos', product.id]">
-        Detalhes
-      </a>
-      
-      <button mat-icon-button 
-          color="accent" 
-          (click)="openEditModal()"
-          aria-label="Editar produto">
+      <a mat-button color="primary" [routerLink]="['/produtos', product.id]"> Detalhes </a>
+
+      <button mat-icon-button color="accent" (click)="openEditModal()" aria-label="Editar produto">
         <mat-icon>edit</mat-icon>
       </button>
 
-      <button mat-icon-button 
-              color="warn" 
-              (click)="deleteProduct(product.id)"
-              aria-label="Excluir produto">
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="deleteProduct(product.id)"
+        aria-label="Excluir produto"
+      >
         <mat-icon>delete</mat-icon>
       </button>
-
     </mat-card-actions>
   </mat-card>
 </div>

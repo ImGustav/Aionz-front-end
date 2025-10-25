@@ -19,23 +19,23 @@ import { MatInputModule } from '@angular/material/input';
   standalone: true,
   imports: [
     CommonModule,
-    ProductCardComponent, 
+    ProductCardComponent,
     MatProgressSpinnerModule,
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatPaginatorModule
+    MatPaginatorModule,
   ],
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.scss'
+  styleUrl: './product-list.component.scss',
 })
 export class ProductListComponent implements OnInit {
-  public isLoading = true
-  public products: Product[] = []
-  public paginatedProducts: Product[] = []
+  public isLoading = true;
+  public products: Product[] = [];
+  public paginatedProducts: Product[] = [];
 
-  public totalProducts: number = 0; 
+  public totalProducts: number = 0;
   public pageSize: number = 10;
   public pageIndex: number = 0;
   public pageSizeOptions = [5, 10, 25];
@@ -47,42 +47,37 @@ export class ProductListComponent implements OnInit {
     private productService: ProductService,
     public dialog: MatDialog,
     private cdr: ChangeDetectorRef,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
-    this.searchSubject.pipe(
-      debounceTime(400),
-      distinctUntilChanged()
-    ).subscribe(searchTerm => {
+    this.searchSubject.pipe(debounceTime(400), distinctUntilChanged()).subscribe((searchTerm) => {
       this.searchTerm = searchTerm;
-      this.pageIndex = 0; 
-      this.fetchProducts(); 
-    })
+      this.pageIndex = 0;
+      this.fetchProducts();
+    });
   }
 
   ngOnInit(): void {
-    this.fetchProducts()
+    this.fetchProducts();
   }
 
   fetchProducts(): void {
-    this.isLoading = true
+    this.isLoading = true;
 
-    this.productService.getProducts(
-      this.pageIndex,
-      this.pageSize,
-      this.searchTerm
-    ).subscribe(response => {
-      this.paginatedProducts = response.data;
-      this.totalProducts = response.total
-      this.isLoading = false
-      this.cdr.detectChanges()
-    })
+    this.productService
+      .getProducts(this.pageIndex, this.pageSize, this.searchTerm)
+      .subscribe((response) => {
+        this.paginatedProducts = response.data;
+        this.totalProducts = response.total;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      });
   }
 
   /**
    * Chamado pelo (input) da barra de pesquisa.
    */
   onSearchInput(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value
+    const filterValue = (event.target as HTMLInputElement).value;
     this.searchSubject.next(filterValue.trim());
   }
 
@@ -93,10 +88,10 @@ export class ProductListComponent implements OnInit {
     // Atualiza o estado do componente
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    
+
     this.fetchProducts();
   }
-  
+
   /**
    * Abre o modal de cadastro.
    */
@@ -105,16 +100,15 @@ export class ProductListComponent implements OnInit {
       width: '500px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        
         const formData = new FormData();
 
         formData.append('category_id', result.category_id.toString());
         formData.append('name', result.name);
         formData.append('description', result.description);
         formData.append('price', result.price.toString());
-        
+
         if (result.imageFile) {
           formData.append('image', result.imageFile, result.imageFile.name);
         }
@@ -122,14 +116,14 @@ export class ProductListComponent implements OnInit {
         this.productService.postProduct(formData).subscribe(
           (newProduct) => {
             console.log('Produto salvo com sucesso!', newProduct);
-            
-            this.fetchProducts(); 
-            this.notificationService.showSuccess('Produto criado com sucesso.')
+
+            this.fetchProducts();
+            this.notificationService.showSuccess('Produto criado com sucesso.');
           },
           (error) => {
             console.error('Erro ao salvar produto:', error);
-            this.notificationService.showError('Erro ao criar um produto.')
-          }
+            this.notificationService.showError('Erro ao criar um produto.');
+          },
         );
       }
     });
@@ -138,10 +132,10 @@ export class ProductListComponent implements OnInit {
   handleProductUpdated(): void {
     this.fetchProducts();
   }
-  
+
   handleProductDeleted(deletedProductId: number): void {
     if (this.paginatedProducts.length === 1 && this.pageIndex > 0) {
-      this.pageIndex = this.pageIndex - 1; 
+      this.pageIndex = this.pageIndex - 1;
     }
     this.fetchProducts();
   }

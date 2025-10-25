@@ -2,8 +2,8 @@
   <h1 mat-dialog-title class="modal-header">
     <div class="header-content">
       <div class="header-text">
-        <span class="title">{{title}}</span>
-        <span class="subtitle">{{subtitle}}</span>
+        <span class="title">{{ title }}</span>
+        <span class="subtitle">{{ subtitle }}</span>
       </div>
     </div>
     <button mat-icon-button class="close-btn" (click)="onCancel()">
@@ -12,14 +12,10 @@
   </h1>
 
   <div mat-dialog-content class="modal-content" [formGroup]="productForm">
-    
-    <div class="form-section" style="margin-top: 1vh;">
+    <div class="form-section" style="margin-top: 1vh">
       <mat-form-field appearance="outline" class="form-field full-width">
         <mat-label>Nome do Produto</mat-label>
-        <input matInput 
-               formControlName="name" 
-               required 
-               placeholder="Ex: HQ do Capuz Vermelho">
+        <input matInput formControlName="name" required placeholder="Ex: HQ do Capuz Vermelho" />
         <mat-error *ngIf="productForm.get('name')?.hasError('required')">
           Nome é obrigatório
         </mat-error>
@@ -29,32 +25,36 @@
     <div class="form-section">
       <mat-form-field appearance="outline" class="form-field full-width">
         <mat-label>Descrição</mat-label>
-        <textarea matInput 
-                  formControlName="description" 
-                  placeholder="Descreva os detalhes do produto..."
-                  rows="4"></textarea>
+        <textarea
+          matInput
+          formControlName="description"
+          placeholder="Descreva os detalhes do produto..."
+          rows="4"
+        ></textarea>
       </mat-form-field>
     </div>
 
     <div class="form-row">
       <mat-form-field appearance="outline" class="form-field">
-        <input matInput 
-               type="string" 
-               formControlName="price" 
-               required 
-               placeholder="0,00"
-               (input)="formatCurrency($event)">
+        <input
+          matInput
+          type="string"
+          formControlName="price"
+          required
+          placeholder="0,00"
+          (input)="formatCurrency($event)"
+        />
         <mat-error *ngIf="productForm.get('price')?.hasError('required')">
           Preço é obrigatório
         </mat-error>
       </mat-form-field>
-      
+
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Categoria</mat-label>
         <mat-select formControlName="category_id" required>
-            <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
-              {{ category.name }}
-            </mat-option>
+          <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
         </mat-select>
         <mat-error *ngIf="productForm.get('category_id')?.hasError('required')">
           Categoria é obrigatória
@@ -77,38 +77,35 @@
             </p>
             <span class="upload-hint">PNG, JPG ou WEBP (máx. 5MB)</span>
           </div>
-          <input hidden 
-                 type="file"
-                 #fileInput
-                 accept="image/*"
-                 (change)="onFileSelected($event)">
+          <input hidden type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" />
         </div>
         <div class="file-info" *ngIf="fileName">
           <mat-icon class="file-icon">check_circle</mat-icon>
           <span class="file-name">{{ fileName }}</span>
-          <button mat-icon-button 
-                  class="remove-file-btn" 
-                  (click)="removeFile(); $event.stopPropagation()">
+          <button
+            mat-icon-button
+            class="remove-file-btn"
+            (click)="removeFile(); $event.stopPropagation()"
+          >
             <mat-icon>close</mat-icon>
           </button>
         </div>
       </div>
     </div>
-
   </div>
 
   <div mat-dialog-actions class="modal-actions">
-    <button mat-stroked-button 
-            class="btn-cancel" 
-            (click)="onCancel()">
+    <button mat-stroked-button class="btn-cancel" (click)="onCancel()">
       <mat-icon>close</mat-icon>
       Cancelar
     </button>
-    <button mat-flat-button 
-            color="primary" 
-            class="btn-save"
-            (click)="onSave()" 
-            [disabled]="!productForm.valid">
+    <button
+      mat-flat-button
+      color="primary"
+      class="btn-save"
+      (click)="onSave()"
+      [disabled]="!productForm.valid"
+    >
       <mat-icon>check</mat-icon>
       Salvar Produto
     </button>

@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
-  providedIn: 'root' // 'root' faz dele um singleton (um só para o app todo)
+  providedIn: 'root', // 'root' faz dele um singleton (um só para o app todo)
 })
 export class NotificationService {
-
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private _snackBar: MatSnackBar) {}
 
   /**
    * Exibe uma mensagem de sucesso (verde).
@@ -14,7 +13,7 @@ export class NotificationService {
    */
   showSuccess(message: string): void {
     this._snackBar.open(message, 'Fechar', {
-      panelClass: ['success-snackbar'] 
+      panelClass: ['success-snackbar'],
     });
   }
 
@@ -24,7 +23,7 @@ export class NotificationService {
    */
   showError(message: string): void {
     this._snackBar.open(message, 'Fechar', {
-      panelClass: ['error-snackbar'] 
+      panelClass: ['error-snackbar'],
     });
   }
 
@@ -33,7 +32,6 @@ export class NotificationService {
    * @param message A mensagem a ser exibida.
    */
   showInfo(message: string): void {
-    this._snackBar.open(message, 'Fechar', {
-    });
+    this._snackBar.open(message, 'Fechar', {});
   }
 }

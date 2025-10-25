@@ -24,21 +24,20 @@ import { RegisterProductModalComponent } from '../register-product-modal/registe
     MatIconModule,
   ],
   templateUrl: './product-card.component.html',
-  styleUrl: './product-card.component.scss'
+  styleUrl: './product-card.component.scss',
 })
-
 export class ProductCardComponent implements OnInit {
   @Input({ required: true }) product!: Product;
   @Output() productDeleted = new EventEmitter<number>();
   @Output() productUpdate = new EventEmitter<void>();
 
   public imageUrl = '';
-  private readonly apiBaseUrl: string; 
+  private readonly apiBaseUrl: string;
 
   constructor(
     private productService: ProductService,
-    public dialog: MatDialog, 
-    private notificationService: NotificationService
+    public dialog: MatDialog,
+    private notificationService: NotificationService,
   ) {
     // 2. Inicialize a variável DENTRO do construtor
     this.apiBaseUrl = this.productService.getApiBaseUrl();
@@ -53,11 +52,11 @@ export class ProductCardComponent implements OnInit {
       width: '400px',
       data: {
         title: 'Confirmar Exclusão',
-        message: `Tem certeza que deseja excluir o produto "${this.product.name}"?`
-      }
+        message: `Tem certeza que deseja excluir o produto "${this.product.name}"?`,
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.productService.deleteProductById(productId).subscribe(
           () => {
@@ -67,8 +66,8 @@ export class ProductCardComponent implements OnInit {
           },
           (error: any) => {
             console.error('Erro ao excluir produto:', error);
-            this.notificationService.showError("Erro ao excluir o produto.")
-          }
+            this.notificationService.showError('Erro ao excluir o produto.');
+          },
         );
       }
     });
@@ -77,10 +76,10 @@ export class ProductCardComponent implements OnInit {
   openEditModal(): void {
     const dialogRef = this.dialog.open(RegisterProductModalComponent, {
       width: '500px',
-      data: this.product
+      data: this.product,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const formData = new FormData();
         formData.append('category_id', result.category_id.toString());
@@ -95,12 +94,12 @@ export class ProductCardComponent implements OnInit {
         this.productService.updateProduct(this.product.id, formData).subscribe(
           () => {
             this.notificationService.showSuccess('Produto atualizado com sucesso!');
-            this.productUpdate.emit(); 
+            this.productUpdate.emit();
           },
           (error) => {
             this.notificationService.showError('Erro ao atualizar o produto.');
             console.error('Erro ao atualizar produto:', error);
-          }
+          },
         );
       }
     });

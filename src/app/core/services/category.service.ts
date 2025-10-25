@@ -5,12 +5,12 @@ import { environment } from '../../../environments/environment';
 import { Category } from '../models/category.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
   private readonly apiBaseUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Busca a lista completa de categorias
