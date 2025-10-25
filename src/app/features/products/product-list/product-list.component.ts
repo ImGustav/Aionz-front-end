@@ -35,13 +35,11 @@ export class ProductListComponent implements OnInit {
   public products: Product[] = []
   public paginatedProducts: Product[] = []
 
-  // Configuração do Paginator (agora controlado pela API)
-  public totalProducts = 0; // Total de produtos (vem da API)
-  public pageSize = 10;
-  public pageIndex = 0;
+  public totalProducts: number = 0; 
+  public pageSize: number = 10;
+  public pageIndex: number = 0;
   public pageSizeOptions = [5, 10, 25];
 
-  // Lógica de Pesquisa
   public searchTerm = '';
   private searchSubject = new Subject<string>();
 
@@ -51,14 +49,13 @@ export class ProductListComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private notificationService: NotificationService
   ) {
-    // espera 400ms após o usuário parar de digitar
     this.searchSubject.pipe(
       debounceTime(400),
       distinctUntilChanged()
     ).subscribe(searchTerm => {
       this.searchTerm = searchTerm;
-      this.pageIndex = 0; // Reseta para a primeira página
-      this.fetchProducts(); // Chama a API com a nova busca
+      this.pageIndex = 0; 
+      this.fetchProducts(); 
     })
   }
 
@@ -74,7 +71,6 @@ export class ProductListComponent implements OnInit {
       this.pageSize,
       this.searchTerm
     ).subscribe(response => {
-      // Atualiza o componente com os dados da API
       this.paginatedProducts = response.data;
       this.totalProducts = response.total
       this.isLoading = false
@@ -84,7 +80,6 @@ export class ProductListComponent implements OnInit {
 
   /**
    * Chamado pelo (input) da barra de pesquisa.
-   * Apenas envia o valor para o 'Subject' (o debouncer cuida do resto).
    */
   onSearchInput(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value
@@ -99,7 +94,6 @@ export class ProductListComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     
-    // Chama a API para buscar a nova página
     this.fetchProducts();
   }
   
@@ -114,28 +108,21 @@ export class ProductListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         
-        // 1. Criar o FormData
         const formData = new FormData();
 
-        // 2. Adicionar os campos (EXATAMENTE como no seu Postman)
-        //    (Assumindo que 'result' contém os valores do form)
         formData.append('category_id', result.category_id.toString());
         formData.append('name', result.name);
         formData.append('description', result.description);
         formData.append('price', result.price.toString());
         
-        // 3. Adicionar o arquivo (chave 'image', como no seu Postman)
-        //    (Assumindo que o modal passou o arquivo na prop 'imageFile')
         if (result.imageFile) {
           formData.append('image', result.imageFile, result.imageFile.name);
         }
 
-        // 4. Chamar o service para salvar
         this.productService.postProduct(formData).subscribe(
           (newProduct) => {
             console.log('Produto salvo com sucesso!', newProduct);
             
-            // 5. Atualizar a lista de produtos na tela
             this.fetchProducts(); 
             this.notificationService.showSuccess('Produto criado com sucesso.')
           },
@@ -148,6 +135,10 @@ export class ProductListComponent implements OnInit {
     });
   }
 
+  handleProductUpdated(): void {
+    this.fetchProducts();
+  }
+  
   handleProductDeleted(deletedProductId: number): void {
     if (this.paginatedProducts.length === 1 && this.pageIndex > 0) {
       this.pageIndex = this.pageIndex - 1; 

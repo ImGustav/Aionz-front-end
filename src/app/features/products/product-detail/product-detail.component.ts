@@ -41,15 +41,12 @@ export class ProductDetailComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
     this.product$ = this.productService.getProductById(id).pipe(
-      // 3. (Extra SEO) Usa o 'tap' para atualizar as meta tags
       tap(product => {
         if (product) {
           const imageUrl = `${this.apiBaseUrl}${product.image}`;
 
-          // Define o Título da Página
           this.titleService.setTitle(`${product.name} - Loja AIONZ`);
           
-          // Define as Meta Tags (descrição, OpenGraph para redes sociais)
           this.metaService.updateTag({ name: 'description', content: product.description });
           this.metaService.updateTag({ property: 'og:title', content: product.name });
           this.metaService.updateTag({ property: 'og:description', content: product.description });

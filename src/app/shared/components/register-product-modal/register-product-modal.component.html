@@ -2,8 +2,8 @@
   <h1 mat-dialog-title class="modal-header">
     <div class="header-content">
       <div class="header-text">
-        <span class="title">Cadastrar Novo Produto</span>
-        <span class="subtitle">Preencha os dados do produto</span>
+        <span class="title">{{title}}</span>
+        <span class="subtitle">{{subtitle}}</span>
       </div>
     </div>
     <button mat-icon-button class="close-btn" (click)="onCancel()">
@@ -13,7 +13,6 @@
 
   <div mat-dialog-content class="modal-content" [formGroup]="productForm">
     
-    <!-- Nome do Produto -->
     <div class="form-section" style="margin-top: 1vh;">
       <mat-form-field appearance="outline" class="form-field full-width">
         <mat-label>Nome do Produto</mat-label>
@@ -27,7 +26,6 @@
       </mat-form-field>
     </div>
 
-    <!-- Descrição -->
     <div class="form-section">
       <mat-form-field appearance="outline" class="form-field full-width">
         <mat-label>Descrição</mat-label>
@@ -38,7 +36,6 @@
       </mat-form-field>
     </div>
 
-    <!-- Preço e Categoria -->
     <div class="form-row">
       <mat-form-field appearance="outline" class="form-field">
         <input matInput 
@@ -65,7 +62,6 @@
       </mat-form-field>
     </div>
 
-    <!-- Upload de Imagem -->
     <div class="form-section">
       <div class="upload-section">
         <div class="upload-label">

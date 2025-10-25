@@ -16,7 +16,6 @@ export class CategoryService {
    * Busca a lista completa de categorias
    */
   getCategories(): Observable<Category[]> {
-    // Certifique-se que o endpoint '/category' está correto
     return this.http.get<Category[]>(`${this.apiBaseUrl}/category`);
   }
 }

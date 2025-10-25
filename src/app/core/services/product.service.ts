@@ -23,10 +23,8 @@ export class ProductService {
     searchTerm: string = ''
   ): Observable<PaginatedProducts> {
     
-    // MatPaginator é 0-based, a maioria das APIs é 1-based.
     const apiPage = pageIndex + 1;
 
-    // Constrói os query params
     let params = new HttpParams()
       .set('page', apiPage.toString())
       .set('limit', pageSize.toString());
@@ -35,7 +33,6 @@ export class ProductService {
       params = params.set('search', searchTerm);
     }
 
-    // A chamada agora espera o novo formato PaginatedProducts
     return this.http.get<PaginatedProducts>(`${this.apiBaseUrl}/produtos`, { params });
   }
 
@@ -45,6 +42,10 @@ export class ProductService {
 
   postProduct(formData: FormData): Observable<Product> {
     return this.http.post<any>(`${this.apiBaseUrl}/produtos`, formData);
+  }
+
+  updateProduct(id: number, formData: FormData): Observable<Product> {
+    return this.http.patch<any>(`${this.apiBaseUrl}/produtos/${id}`, formData);
   }
 
   deleteProductById(id: number): Observable<void> {

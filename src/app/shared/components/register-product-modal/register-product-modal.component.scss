@@ -1,11 +1,3 @@
-/* * =================================
- * ARQUIVO DO COMPONENTE (seu-componente.component.scss)
- * =================================
-*/
-
-/* Este arquivo agora usa as variáveis definidas globalmente
-  no :root (em styles.scss) 
-*/
 
 .modal-container {
   display: flex;
@@ -26,29 +18,6 @@
   border-bottom: 1px solid var(--border-color);
   flex-shrink: 0;
 
-  .header-content {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .icon-wrapper {
-    background-color: var(--primary-color-light);
-    color: var(--primary-color);
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    mat-icon {
-      font-size: 24px;
-      width: 24px;
-      height: 24px;
-    }
-  }
-
   .header-text {
     display: flex;
     flex-direction: column;
@@ -58,10 +27,12 @@
       font-weight: 500;
       line-height: 1.2;
       color: var(--text-dark);
+      text-align: center;
     }
     .subtitle {
       font-size: 0.875rem;
       color: var(--text-muted);
+      text-align: center;
     }
   }
 
@@ -162,22 +133,6 @@
       color: var(--primary-color);
     }
 
-    .upload-text {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-size: 0.9rem;
-      line-height: 1.4;
-
-      .upload-primary {
-        font-weight: 500;
-        color: var(--primary-color);
-      }
-      .upload-secondary {
-        color: var(--text-muted);
-      }
-    }
-
     .upload-hint {
       font-size: 0.75rem;
       color: #9e9e9e;
@@ -193,12 +148,6 @@
     background-color: var(--success-bg);
     border: 1px solid var(--success-border);
     border-radius: 8px;
-
-    .file-icon {
-      color: var(--success-icon);
-      font-size: 20px;
-      flex-shrink: 0;
-    }
 
     .file-name {
       flex-grow: 1;

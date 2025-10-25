@@ -10,6 +10,7 @@ import { getCurrencyValues } from '../../utils/formatters';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from '../../../core/services/notification.service';
+import { RegisterProductModalComponent } from '../register-product-modal/register-product-modal.component';
 
 @Component({
   selector: 'app-product-card',
@@ -29,13 +30,14 @@ import { NotificationService } from '../../../core/services/notification.service
 export class ProductCardComponent implements OnInit {
   @Input({ required: true }) product!: Product;
   @Output() productDeleted = new EventEmitter<number>();
+  @Output() productUpdate = new EventEmitter<void>();
 
   public imageUrl = '';
-  private readonly apiBaseUrl: string; // <-- 1. Apenas declare o tipo
+  private readonly apiBaseUrl: string; 
 
   constructor(
     private productService: ProductService,
-    public dialog: MatDialog, // 6. Injete o serviço de Diálogo
+    public dialog: MatDialog, 
     private notificationService: NotificationService
   ) {
     // 2. Inicialize a variável DENTRO do construtor
@@ -47,7 +49,6 @@ export class ProductCardComponent implements OnInit {
   }
 
   deleteProduct(productId: number): void {
-    // 7. Abre o diálogo
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {
@@ -56,21 +57,49 @@ export class ProductCardComponent implements OnInit {
       }
     });
 
-    // 8. Ouve a resposta do diálogo
     dialogRef.afterClosed().subscribe(result => {
-      // 9. Se o usuário clicou em "Confirmar" (result === true)
       if (result) {
-        // (Assumindo que você tem um método 'deleteProduct' no seu service)
         this.productService.deleteProductById(productId).subscribe(
           () => {
             this.notificationService.showSuccess(`Produto excluído com sucesso`);
             console.log('Produto excluído com sucesso:', productId);
-            // 10. Avisa o componente-pai que este produto foi excluído
             this.productDeleted.emit(productId);
           },
           (error: any) => {
             console.error('Erro ao excluir produto:', error);
             this.notificationService.showError("Erro ao excluir o produto.")
+          }
+        );
+      }
+    });
+  }
+
+  openEditModal(): void {
+    const dialogRef = this.dialog.open(RegisterProductModalComponent, {
+      width: '500px',
+      data: this.product
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const formData = new FormData();
+        formData.append('category_id', result.category_id.toString());
+        formData.append('name', result.name);
+        formData.append('description', result.description);
+        formData.append('price', result.price.toString());
+
+        if (result.imageFile) {
+          formData.append('image', result.imageFile, result.imageFile.name);
+        }
+
+        this.productService.updateProduct(this.product.id, formData).subscribe(
+          () => {
+            this.notificationService.showSuccess('Produto atualizado com sucesso!');
+            this.productUpdate.emit(); 
+          },
+          (error) => {
+            this.notificationService.showError('Erro ao atualizar o produto.');
+            console.error('Erro ao atualizar produto:', error);
           }
         );
       }

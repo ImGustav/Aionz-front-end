@@ -27,6 +27,13 @@
       </a>
       
       <button mat-icon-button 
+          color="accent" 
+          (click)="openEditModal()"
+          aria-label="Editar produto">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button mat-icon-button 
               color="warn" 
               (click)="deleteProduct(product.id)"
               aria-label="Excluir produto">
