@@ -1,0 +1,91 @@
+/*
+ * =================================
+ * GRID DE PRODUTOS
+ * =================================
+*/
+.product-grid-container {
+  display: grid;
+  /* Cria colunas responsivas:
+    - auto-fit: Preenche o espaço com quantas colunas couberem.
+    - minmax(300px, 1fr): Cada coluna terá no MÍNIMO 300px.
+      Se sobrar espaço, elas se dividem igualmente (1fr).
+  */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px; /* Espaço entre os cards */
+  padding: 24px; /* Espaço ao redor de todo o grid */
+}
+
+/*
+ * =================================
+ * CARD DE PRODUTO
+ * =================================
+*/
+.product-card {
+  /* Força o card a usar flexbox verticalmente */
+  display: flex;
+  flex-direction: column;
+
+  /* Estilo sutil para o card */
+  border: 1px solid var(--border-color);
+  border-radius: 8px; /* Cantos arredondados */
+  overflow: hidden; /* Garante que a imagem não vaze */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px); /* Efeito de "levantar" */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /*
+   * IMAGEM DO PRODUTO
+   */
+  .product-image {
+    width: 100%;
+    height: 200px; /* Altura fixa para alinhar todos os cards */
+    object-fit: cover; /* Evita que a imagem distorça */
+  }
+
+  /*
+   * PREÇO
+   */
+  .product-price {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color); /* Usa a cor primária global */
+    margin-top: 8px;
+  }
+
+  /*
+   * CONTEÚDO (DESCRIÇÃO)
+   */
+  mat-card-content {
+    flex-grow: 1;
+    padding-top: 16px;
+  }
+
+  .product-description-snippet {
+    color: var(--text-muted); /* Usa a cor de texto secundário global */
+    font-size: 0.9rem;
+    line-height: 1.5;
+
+    /* Trunca a descrição em 3 linhas para manter os cards alinhados */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Define uma altura mínima para 3 linhas, alinhando cards com pouca descrição */
+    min-height: calc(0.9rem * 1.5 * 3);
+  }
+
+  /*
+   * AÇÕES (BOTÕES)
+   */
+  .product-actions {
+    /* Garante que as ações fiquem no final do card */
+    padding: 8px 16px 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+}

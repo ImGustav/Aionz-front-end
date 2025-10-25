@@ -1,0 +1,54 @@
+<div *ngIf="!isLoading; else loading" class="list-container">
+  
+  <h1>Nossos Produtos</h1>
+
+  <mat-form-field appearance="outline" class="search-bar">
+    <mat-label>Pesquisar Produtos</mat-label>
+    <input matInput 
+           (input)="onSearchInput($event)" 
+           placeholder="Ex: HQ do Capuz Vermelho">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <div class="product-grid">
+    <app-product-card 
+      *ngFor="let product of paginatedProducts" 
+      [product]="product"
+      (productDeleted)="handleProductDeleted($event)">
+    </app-product-card>
+  </div>
+
+  <mat-paginator
+      *ngIf="paginatedProducts.length > 0" class="paginator"
+      [length]="totalProducts"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="handlePageEvent($event)"
+      showFirstLastButtons
+      aria-label="Selecionar página de produtos">
+  </mat-paginator>
+
+  <button mat-fab 
+        color="primary" 
+        class="fab-add-button" 
+        (click)="openRegisterModal()"
+        aria-label="Cadastrar novo produto">
+  <mat-icon>add</mat-icon>
+  </button>
+
+</div>
+
+<ng-template #noResults>
+  <div *ngIf="!isLoading" class="no-results-container">
+    <mat-icon class="no-results-icon">search_off</mat-icon>
+    <h2>Nenhum produto encontrado</h2>
+    <p>Tente ajustar seus termos de pesquisa.</p>
+  </div>
+</ng-template>
+
+<ng-template #loading>
+  <div class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

@@ -1,0 +1,21 @@
+.detail-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.detail-card {
+  max-width: 600px;
+}
+
+.detail-image {
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}

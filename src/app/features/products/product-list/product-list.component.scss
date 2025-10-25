@@ -1,0 +1,69 @@
+.list-container {
+  padding: 24px;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+/*
+ * =================================
+ * BOTÃO FLUTUANTE (FAB)
+ * =================================
+*/
+.fab-add-button {
+  position: fixed; 
+  bottom: 24px;
+  right: 24px;
+  z-index: 100; 
+}
+
+.paginator {
+  margin-top: 24px;
+}
+
+h1 {
+  text-align: center; 
+  letter-spacing: 2px;
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.search-bar {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  max-width: 700px; 
+  margin-bottom: 32px; 
+}
+
+.no-results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #666;
+  text-align: center;
+
+  .no-results-icon {
+    font-size: 60px;
+    width: 60px;
+    height: 60px;
+  }
+
+  h2 {
+    margin-top: 16px;
+  }
+}
