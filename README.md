@@ -21,7 +21,7 @@ Construída com **Angular** e **Angular Material**, esta aplicação consome a A
 
 ## Visão Geral 
 
-<img src="./public/sys.gif" alt="Gif da aplicação Angular rodando" width="800"/>
+![Gif da aplicacao rodando](./public/sys.gif)
 
 ## Tecnologias Utilizadas
 
