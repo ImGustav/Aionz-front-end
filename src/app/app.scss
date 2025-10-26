@@ -1,22 +1,13 @@
-/* * =================================
- * ARQUIVO GLOBAL (styles.scss)
- * =================================
-*/
-
-/* Definição das Variáveis Globais de Tema */
 :root {
-  --primary-color: #673ab7; /* Cor primária (Ex: Deep Purple) */
-  --primary-color-light: rgba(103, 58, 183, 0.1); /* Tom claro da cor primária */
+  --primary-color: #673ab7;
+  --primary-color-light: rgba(103, 58, 183, 0.1);
 
-  /* Cores de Texto */
-  --text-dark: #424242; /* Textos principais, títulos */
-  --text-muted: #757575; /* Textos secundários, placeholders, ícones */
+  --text-dark: #424242;
+  --text-muted: #757575;
 
-  /* Cores de Fundo e Bordas */
-  --border-color: #e0e0e0; /* Cor da borda padrão */
-  --bg-light: #f9f9f9; /* Fundo de áreas de upload, etc. */
+  --border-color: #e0e0e0;
+  --bg-light: #f9f9f9;
 
-  /* Cores Semânticas (Feedback) */
   --success-bg: #e8f5e9;
   --success-border: #c8e6c9;
   --success-icon: #4caf50;
@@ -24,13 +15,8 @@
   --danger-hover-bg: rgba(244, 67, 54, 0.1);
 }
 
-/* * Estilo Global para Angular Material Dialogs
- * Isso remove o padding padrão e adiciona bordas arredondadas
- * para TODOS os mat-dialogs do seu app, permitindo 
- * que os headers/footers ocupem 100% da largura.
-*/
 .mat-dialog-container {
   padding: 0 !important;
   border-radius: 12px !important;
-  overflow: hidden !important; /* Garante que o conteúdo não vaze */
+  overflow: hidden !important;
 }

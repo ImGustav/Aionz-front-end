@@ -18,13 +18,20 @@
 
 .fab-add-button {
   position: fixed;
-  bottom: 35px;
+  bottom: 5rem;
   right: 24px;
   z-index: 100;
 }
 
 .paginator {
-  margin-top: 24px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: --bg-light;
+  z-index: 100;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 h1 {
@@ -61,4 +68,13 @@ h1 {
   h2 {
     margin-top: 16px;
   }
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 16px;
 }

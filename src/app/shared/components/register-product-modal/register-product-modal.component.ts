@@ -1,5 +1,5 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -35,6 +35,7 @@ import { Product } from '../../../core/models/product.model';
   styleUrls: ['./register-product-modal.component.scss'],
 })
 export class RegisterProductModalComponent {
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   productForm: FormGroup;
   fileName = '';
   selectedFile: File | null = null;
@@ -45,9 +46,9 @@ export class RegisterProductModalComponent {
   public categories$!: Observable<Category[]>;
 
   constructor(
-    private fb: FormBuilder, // Injetamos o FormBuilder
+    private fb: FormBuilder,
     private categoryService: CategoryService,
-    public dialogRef: MatDialogRef<RegisterProductModalComponent>, // Referência ao próprio modal
+    public dialogRef: MatDialogRef<RegisterProductModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Product | null,
   ) {
     this.isEditMode = !!this.data;
@@ -65,8 +66,8 @@ export class RegisterProductModalComponent {
       description: [''],
       price: ['', [Validators.required, Validators.min(0)]],
       category_id: ['', Validators.required],
+      imageFile: [null as File | null, this.isEditMode ? null : Validators.required],
     });
-    this.data = this.dialogRef['_containerInstance']._config.data;
   }
 
   ngOnInit(): void {
@@ -86,18 +87,21 @@ export class RegisterProductModalComponent {
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-      this.fileName = this.selectedFile.name;
-      this.productForm.patchValue({ imageFile: this.selectedFile });
+    const file = input.files?.[0];
+
+    if (file) {
+      this.fileName = file.name;
+      this.productForm.patchValue({ imageFile: file });
       this.productForm.get('imageFile')?.markAsTouched();
     }
   }
 
   removeFile(): void {
-    this.selectedFile = null;
     this.fileName = this.isEditMode ? this.data?.image.split('/').pop() || 'Imagem existente' : '';
     this.productForm.patchValue({ imageFile: null });
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
   }
 
   onCancel(): void {
@@ -106,11 +110,9 @@ export class RegisterProductModalComponent {
 
   onSave(): void {
     if (this.productForm.valid) {
-      const formData = {
-        ...this.productForm.value,
-        imageFile: this.selectedFile,
-      };
-      this.dialogRef.close(formData);
+      this.dialogRef.close(this.productForm.value);
+    } else {
+      this.productForm.markAllAsTouched();
     }
   }
 
@@ -120,7 +122,6 @@ export class RegisterProductModalComponent {
 
     this.productForm.get('price')?.setValue(numericValue, { emitEvent: false });
 
-    // b) Atualiza o input (a "visão") com a string formatada
     input.value = formattedValue;
   }
 }

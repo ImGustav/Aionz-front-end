@@ -79,6 +79,16 @@
           </div>
           <input hidden type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" />
         </div>
+
+        <mat-error
+          *ngIf="
+            productForm.get('imageFile')?.hasError('required') &&
+            productForm.get('imageFile')?.touched
+          "
+        >
+          Imagem é obrigatória
+        </mat-error>
+
         <div class="file-info" *ngIf="fileName">
           <mat-icon class="file-icon">check_circle</mat-icon>
           <span class="file-name">{{ fileName }}</span>
